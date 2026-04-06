@@ -1,111 +1,1498 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sushant Web Services</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0" />
+<meta name="theme-color" content="#0a1628" />
+<title>Hanu Dental & Healthcare – Shahabad, Lucknow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@300;400;500;600&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
-        }
+<style>
+/* ===== CSS VARIABLES ===== */
+:root{
+  --navy:#0a1628;
+  --blue:#1a3a6b;
+  --accent:#e84917;
+  --orange:#f05a1a;
+  --teal:#19b8c5;
+  --lime:#8dc63f;
+  --gold:#f5c842;
+  --white:#ffffff;
+  --light:#f0f4fa;
+  --glass:rgba(255,255,255,0.07);
+  --glass-border:rgba(255,255,255,0.14);
+  --shadow-lg:0 24px 60px rgba(0,0,0,0.45);
+  --shadow-card:0 8px 32px rgba(10,22,40,0.35);
+  --radius:18px;
+  --font-display:'Playfair Display',serif;
+  --font-body:'DM Sans',sans-serif;
+  --font-title:'Rajdhani',sans-serif;
+  --navbar-h:72px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{font-family:var(--font-body);background:var(--navy);color:var(--white);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block;height:auto}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none;outline:none;font-family:inherit;-webkit-tap-highlight-color:transparent}
 
-        header {
-            background: #111;
-            color: #fff;
-            padding: 15px;
-            text-align: center;
-        }
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--navy)}
+::-webkit-scrollbar-thumb{background:var(--teal);border-radius:99px}
 
-        nav {
-            background: #333;
-            padding: 10px;
-            text-align: center;
-        }
+/* ===== LOADER ===== */
+#loader{
+  position:fixed;inset:0;z-index:9999;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at 40% 60%,#0d2247 0%,#050d1a 70%);
+  transition:opacity 0.8s ease,visibility 0.8s ease;
+}
+#loader.hide{opacity:0;visibility:hidden;pointer-events:none}
+.loader-logo{
+  width:clamp(90px,18vw,160px);
+  animation:loaderLogoIn 1.2s cubic-bezier(0.22,1,0.36,1) forwards,loaderPulse 2.2s ease-in-out 1.4s infinite;
+  filter:drop-shadow(0 0 40px rgba(25,184,197,0.7)) drop-shadow(0 0 80px rgba(232,73,23,0.4));
+  opacity:0;transform:scale(0.6) rotate(-3deg);
+}
+@keyframes loaderLogoIn{to{opacity:1;transform:scale(1) rotate(0deg)}}
+@keyframes loaderPulse{
+  0%,100%{filter:drop-shadow(0 0 30px rgba(25,184,197,0.6)) drop-shadow(0 0 60px rgba(232,73,23,0.3))}
+  50%{filter:drop-shadow(0 0 60px rgba(25,184,197,1)) drop-shadow(0 0 100px rgba(232,73,23,0.6))}
+}
+.loader-brand{
+  margin-top:24px;font-family:var(--font-title);font-size:clamp(13px,3.5vw,22px);
+  letter-spacing:0.35em;color:var(--white);opacity:0;
+  animation:fadeUp 0.9s ease 1s forwards;
+  text-align:center;line-height:1.6;padding:0 20px;
+}
+.loader-brand span{color:var(--teal)}
+.loader-tagline{
+  font-family:var(--font-body);font-size:12px;letter-spacing:0.2em;
+  color:rgba(255,255,255,0.45);margin-top:6px;opacity:0;
+  animation:fadeUp 0.9s ease 1.4s forwards;text-align:center;
+}
+.loader-bar{
+  width:min(160px,60vw);height:2px;background:rgba(255,255,255,0.1);
+  border-radius:99px;margin-top:28px;overflow:hidden;
+  opacity:0;animation:fadeUp 0.5s ease 1.6s forwards;
+}
+.loader-bar-fill{
+  height:100%;width:0%;background:linear-gradient(90deg,var(--teal),var(--accent));
+  border-radius:99px;animation:loadBar 2s ease 1.8s forwards;
+}
+@keyframes loadBar{to{width:100%}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 
-        nav a {
-            color: white;
-            margin: 0 15px;
-            text-decoration: none;
-            font-weight: bold;
-        }
+/* ===== NAVBAR ===== */
+#navbar{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  height:var(--navbar-h);
+  padding:0 5%;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(10,22,40,0.3);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--glass-border);
+  transition:all 0.4s ease;
+  will-change:transform;
+}
+#navbar.scrolled{background:rgba(5,13,26,0.95)}
+.nav-brand{display:flex;align-items:center;gap:10px;min-width:0;flex-shrink:0}
+.nav-logo{
+  width:44px;height:44px;object-fit:contain;flex-shrink:0;
+  filter:drop-shadow(0 0 12px rgba(25,184,197,0.5));
+  transition:transform 0.3s ease,filter 0.3s ease;
+}
+.nav-name{font-family:var(--font-title);font-size:16px;line-height:1.2;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav-name span{display:block;font-size:10px;letter-spacing:0.18em;color:var(--teal);font-weight:500}
+nav{display:flex;align-items:center;flex:1;justify-content:flex-end}
+nav ul{list-style:none;display:flex;align-items:center;gap:4px;flex-wrap:nowrap}
+nav ul li a{
+  padding:8px 12px;font-size:13px;font-weight:500;letter-spacing:0.05em;
+  border-radius:8px;transition:all 0.3s ease;position:relative;overflow:hidden;white-space:nowrap;
+}
+nav ul li a::after{
+  content:'';position:absolute;bottom:4px;left:50%;right:50%;height:1.5px;
+  background:var(--teal);transition:all 0.3s ease;
+}
+nav ul li a:hover::after{left:14px;right:14px}
+nav ul li a:hover{color:var(--teal)}
+.nav-cta{
+  background:linear-gradient(135deg,var(--accent),var(--orange));
+  color:#fff!important;border-radius:10px!important;
+  padding:8px 16px!important;
+  box-shadow:0 4px 20px rgba(232,73,23,0.35);
+}
+.nav-cta:hover{box-shadow:0 6px 30px rgba(232,73,23,0.6)!important;transform:translateY(-1px)}
+.nav-cta::after{display:none!important}
 
-        nav a:hover {
-            color: #00ffcc;
-        }
+/* ===== HAMBURGER ===== */
+.hamburger{
+  display:none;flex-direction:column;justify-content:center;gap:5px;
+  cursor:pointer;padding:8px;border-radius:8px;
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+  min-width:40px;min-height:40px;align-items:center;
+  transition:background 0.3s ease;z-index:901;flex-shrink:0;
+}
+.hamburger:hover{background:rgba(25,184,197,0.15)}
+.hamburger span{
+  display:block;width:22px;height:2px;background:var(--white);border-radius:2px;
+  transition:all 0.35s cubic-bezier(0.22,1,0.36,1);transform-origin:center;
+}
+.hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.active span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
-        .hero {
-            padding: 50px;
-            text-align: center;
-            background: linear-gradient(135deg, #000, #444);
-            color: white;
-        }
+/* ===== MOBILE MENU ===== */
+#mobile-menu{
+  display:flex;
+  position:fixed;top:0;left:0;right:0;bottom:0;z-index:899;
+  background:rgba(5,13,26,0.98);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  opacity:0;visibility:hidden;
+  transform:translateY(-12px);
+  transition:opacity 0.35s ease,visibility 0.35s ease,transform 0.35s cubic-bezier(0.22,1,0.36,1);
+  padding:80px 20px 40px;
+  overflow-y:auto;
+}
+#mobile-menu.open{opacity:1;visibility:visible;transform:translateY(0)}
+#mobile-menu a{
+  font-family:var(--font-title);font-size:clamp(22px,6vw,30px);font-weight:600;
+  letter-spacing:0.08em;transition:color 0.3s,transform 0.3s;
+  padding:10px 30px;border-radius:12px;width:100%;max-width:280px;text-align:center;
+  border:1px solid transparent;
+}
+#mobile-menu a:hover,#mobile-menu a:active{color:var(--teal);background:rgba(25,184,197,0.08);border-color:rgba(25,184,197,0.2)}
+.mobile-menu-call{
+  margin-top:12px;background:linear-gradient(135deg,var(--accent),var(--orange))!important;
+  color:#fff!important;border:none!important;padding:14px 30px!important;
+  font-size:clamp(16px,4vw,20px)!important;box-shadow:0 6px 24px rgba(232,73,23,0.4);
+}
+.close-menu{
+  position:absolute;top:18px;right:20px;
+  width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;cursor:pointer;color:rgba(255,255,255,0.7);
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);
+  transition:all 0.3s;
+}
+.close-menu:hover{color:#fff;background:rgba(255,255,255,0.12)}
+body.mobile-menu-open{overflow:hidden}
 
-        .hero h1 {
-            font-size: 40px;
-        }
+/* ===== HERO ===== */
+#hero{
+  min-height:100vh;min-height:100svh;
+  position:relative;display:flex;align-items:center;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background-image:url('https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=1600&q=85');
+  background-size:cover;background-position:center;
+  will-change:transform;
+}
+@media(prefers-reduced-motion:no-preference){
+  .hero-bg{animation:heroZoom 14s ease-in-out infinite alternate;}
+}
+@keyframes heroZoom{from{transform:scale(1)}to{transform:scale(1.06)}}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(5,13,26,0.93) 0%,rgba(15,45,100,0.82) 55%,rgba(5,13,26,0.75) 100%);
+}
+.hero-watermark{
+  position:absolute;right:-4%;bottom:-8%;
+  width:clamp(200px,40vw,520px);opacity:0.04;
+  pointer-events:none;display:none;
+}
+@media(min-width:768px){.hero-watermark{display:block}}
+.hero-content{
+  position:relative;z-index:2;
+  padding:calc(var(--navbar-h) + 40px) 5% 60px;
+  max-width:760px;width:100%;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(25,184,197,0.12);border:1px solid rgba(25,184,197,0.3);
+  padding:6px 16px;border-radius:99px;font-size:11px;letter-spacing:0.12em;
+  color:var(--teal);margin-bottom:20px;font-weight:500;
+  animation:fadeUp 0.8s ease 0.2s both;flex-wrap:wrap;
+}
+.hero-title{
+  font-family:var(--font-display);
+  font-size:clamp(32px,7vw,74px);line-height:1.1;font-weight:900;
+  animation:fadeUp 0.8s ease 0.4s both;
+  margin-bottom:14px;
+}
+.hero-title .accent{color:var(--teal)}
+.hero-title .orange{color:var(--orange)}
+.typewriter-wrap{
+  font-family:var(--font-title);font-size:clamp(16px,3.5vw,28px);
+  color:rgba(255,255,255,0.75);letter-spacing:0.06em;
+  margin-bottom:24px;min-height:clamp(30px,5vw,40px);
+  animation:fadeUp 0.8s ease 0.6s both;
+}
+#typewriter{color:var(--gold);font-weight:600}
+.hero-desc{
+  font-size:clamp(13px,2.2vw,16px);line-height:1.8;color:rgba(255,255,255,0.6);
+  max-width:520px;margin-bottom:36px;
+  animation:fadeUp 0.8s ease 0.8s both;
+}
+.hero-btns{
+  display:flex;flex-wrap:wrap;gap:12px;
+  animation:fadeUp 0.8s ease 1s both;
+}
+.btn{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:13px 22px;border-radius:12px;font-size:clamp(13px,3vw,16px);font-weight:600;
+  letter-spacing:0.04em;transition:all 0.3s ease;position:relative;overflow:hidden;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+}
+.btn::after{
+  content:'';position:absolute;inset:0;background:rgba(255,255,255,0.15);
+  transform:translateX(-100%);transition:transform 0.4s ease;
+}
+.btn:hover::after{transform:translateX(0)}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(0) scale(0.98)}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--orange));color:#fff;box-shadow:0 6px 28px rgba(232,73,23,0.4)}
+.btn-primary:hover{box-shadow:0 10px 40px rgba(232,73,23,0.6)}
+.btn-whatsapp{background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;box-shadow:0 6px 28px rgba(37,211,102,0.35)}
+.btn-whatsapp:hover{box-shadow:0 10px 40px rgba(37,211,102,0.5)}
+.btn-outline{background:rgba(255,255,255,0.07);color:#fff;border:1px solid rgba(255,255,255,0.2);backdrop-filter:blur(10px)}
+.btn-outline:hover{background:rgba(255,255,255,0.14);border-color:rgba(255,255,255,0.4)}
+.hero-stats{
+  display:flex;gap:14px;margin-top:36px;flex-wrap:wrap;
+  animation:fadeUp 0.8s ease 1.2s both;
+}
+.stat-card{
+  background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid var(--glass-border);
+  padding:14px 18px;border-radius:14px;text-align:center;
+  flex:1;min-width:80px;
+}
+.stat-num{font-family:var(--font-title);font-size:clamp(20px,4vw,26px);font-weight:700;color:var(--teal)}
+.stat-lbl{font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:0.1em;margin-top:2px}
 
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background: #00ffcc;
-            color: black;
-            margin-top: 20px;
-            text-decoration: none;
-            border-radius: 5px;
-        }
+/* ===== SECTION UTILITY ===== */
+section{padding:clamp(40px,8vw,80px) 5%}
+.section-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;letter-spacing:0.25em;color:var(--teal);font-weight:600;
+  text-transform:uppercase;margin-bottom:14px;
+}
+.section-tag::before{content:'';display:block;width:24px;height:1.5px;background:var(--teal)}
+.section-title{
+  font-family:var(--font-display);font-size:clamp(26px,5vw,52px);
+  font-weight:900;line-height:1.15;margin-bottom:16px;
+}
+.section-sub{font-size:clamp(13px,2vw,16px);line-height:1.8;color:rgba(255,255,255,0.55);max-width:560px}
 
-        .section {
-            padding: 40px;
-            text-align: center;
-        }
+/* ===== ABOUT ===== */
+#about{background:linear-gradient(180deg,var(--navy) 0%,#0c1e3d 100%)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;margin-top:50px}
+.about-img-wrap{
+  position:relative;
+  /* Reserve space for the badge so it never clips outside */
+  padding-bottom:30px;
+  padding-right:20px;
+  overflow:visible;
+}
+.about-img{
+  width:100%;border-radius:24px;object-fit:cover;
+  height:clamp(260px,38vw,440px);
+  box-shadow:var(--shadow-lg);
+  display:block;
+}
+.about-badge{
+  position:absolute;bottom:0;right:0;
+  background:linear-gradient(135deg,var(--accent),var(--orange));
+  border-radius:16px;padding:14px 18px;text-align:center;
+  box-shadow:0 12px 40px rgba(232,73,23,0.4);
+  /* Prevent overflow & ensure text wraps */
+  max-width:110px;
+  word-wrap:break-word;
+  overflow:hidden;
+  z-index:2;
+}
+.about-badge .big{font-family:var(--font-title);font-size:clamp(22px,4vw,34px);font-weight:700;line-height:1;white-space:nowrap}
+.about-badge .sm{font-size:10px;letter-spacing:0.06em;opacity:0.9;margin-top:4px;word-wrap:break-word;line-height:1.3}
+.about-text{min-width:0;word-wrap:break-word;overflow-wrap:break-word}
+.about-text p{font-size:clamp(13px,2vw,16px);line-height:1.9;color:rgba(255,255,255,0.65);margin-bottom:16px;word-wrap:break-word;overflow-wrap:break-word}
+.about-checks{list-style:none;margin:20px 0}
+.about-checks li{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;font-size:clamp(13px,2vw,15px);color:rgba(255,255,255,0.75);word-wrap:break-word;overflow-wrap:break-word}
+.about-checks li i{color:var(--teal);font-size:15px;flex-shrink:0;margin-top:2px}
 
-        footer {
-            background: #111;
-            color: white;
-            text-align: center;
-            padding: 15px;
-        }
-    </style>
+/* ===== SERVICES ===== */
+#services{background:#060f1e}
+.services-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));
+  gap:22px;margin-top:48px;
+}
+.service-card{
+  background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--glass-border);border-radius:var(--radius);
+  padding:28px 24px;transition:all 0.4s cubic-bezier(0.22,1,0.36,1);
+  position:relative;overflow:hidden;
+}
+.service-card::before{
+  content:'';position:absolute;inset:0;opacity:0;
+  background:linear-gradient(135deg,rgba(25,184,197,0.08),rgba(232,73,23,0.05));
+  transition:opacity 0.4s ease;
+}
+.service-card:hover{transform:translateY(-8px);box-shadow:0 20px 60px rgba(25,184,197,0.18);border-color:rgba(25,184,197,0.3)}
+.service-card:hover::before{opacity:1}
+.service-icon{
+  width:60px;height:60px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;margin-bottom:20px;
+  background:linear-gradient(135deg,rgba(25,184,197,0.15),rgba(25,184,197,0.05));
+  border:1px solid rgba(25,184,197,0.2);color:var(--teal);
+  transition:all 0.4s ease;
+}
+.service-card:hover .service-icon{background:linear-gradient(135deg,var(--teal),#0e9aa7);color:#fff;box-shadow:0 8px 30px rgba(25,184,197,0.4)}
+.service-card h3{font-family:var(--font-title);font-size:clamp(17px,3vw,21px);font-weight:700;margin-bottom:10px;letter-spacing:0.04em}
+.service-card p{font-size:clamp(13px,2vw,15px);color:rgba(255,255,255,0.55);line-height:1.75}
+.service-link{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:13px;font-weight:600;color:var(--teal);transition:gap 0.3s}
+.service-card:hover .service-link{gap:10px}
+
+/* ===== GALLERY ===== */
+#gallery{background:linear-gradient(180deg,#060f1e 0%,#0a1628 100%)}
+.gallery-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:48px;
+}
+.gallery-item{
+  border-radius:14px;overflow:hidden;position:relative;cursor:pointer;
+  aspect-ratio:4/3;
+}
+.gallery-item img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform 0.6s cubic-bezier(0.22,1,0.36,1);
+}
+.gallery-item:hover img{transform:scale(1.08)}
+.gallery-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(10,22,40,0.85) 0%,transparent 60%);
+  opacity:0;transition:opacity 0.4s ease;
+  display:flex;align-items:flex-end;padding:16px;
+}
+.gallery-item:hover .gallery-overlay{opacity:1}
+.gallery-overlay span{font-size:12px;letter-spacing:0.08em;font-weight:600;color:rgba(255,255,255,0.9)}
+.gallery-overlay i{color:var(--teal);margin-right:6px}
+
+/* Lightbox */
+#lightbox{
+  display:none;position:fixed;inset:0;z-index:9000;
+  background:rgba(0,0,0,0.93);align-items:center;justify-content:center;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+#lightbox.open{display:flex}
+#lightbox img{max-width:90vw;max-height:88vh;border-radius:12px;box-shadow:var(--shadow-lg);object-fit:contain}
+#lightbox-close{position:absolute;top:20px;right:24px;font-size:30px;cursor:pointer;color:rgba(255,255,255,0.7);transition:color 0.3s;width:44px;height:44px;display:flex;align-items:center;justify-content:center}
+#lightbox-close:hover{color:#fff}
+
+/* ===== TRUST SECTION ===== */
+#trust{background:#060f1e}
+.rating-hero{text-align:center;margin-bottom:52px;}
+.rating-big{
+  font-family:var(--font-display);font-size:clamp(60px,12vw,120px);font-weight:900;
+  background:linear-gradient(135deg,var(--gold),#ffad4a);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;
+}
+.stars{font-size:clamp(22px,4vw,28px);color:var(--gold);margin:8px 0;letter-spacing:4px}
+.reviews-count{font-size:13px;color:rgba(255,255,255,0.45);letter-spacing:0.1em;padding:0 20px}
+.testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:22px}
+.testi-card{
+  background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius);padding:26px;transition:transform 0.4s ease,box-shadow 0.4s ease;
+}
+.testi-card:hover{transform:translateY(-6px);box-shadow:0 16px 50px rgba(25,184,197,0.12)}
+.testi-top{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.testi-avatar{
+  width:48px;height:48px;border-radius:50%;object-fit:cover;
+  border:2px solid var(--teal);flex-shrink:0;
+}
+.testi-name{font-family:var(--font-title);font-size:16px;font-weight:600;letter-spacing:0.04em}
+.testi-loc{font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px}
+.testi-stars{color:var(--gold);font-size:13px;margin-bottom:12px;letter-spacing:2px}
+.testi-text{font-size:clamp(12px,2vw,14px);line-height:1.8;color:rgba(255,255,255,0.6);font-style:italic}
+
+/* ===== CONTACT ===== */
+#contact{background:linear-gradient(180deg,#060f1e 0%,var(--navy) 100%)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;margin-top:50px;align-items:start}
+.contact-info h3{font-family:var(--font-title);font-size:20px;margin-bottom:20px;color:var(--teal);letter-spacing:0.08em}
+.info-row{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px}
+.info-icon{
+  width:42px;height:42px;border-radius:12px;flex-shrink:0;
+  background:rgba(25,184,197,0.12);border:1px solid rgba(25,184,197,0.25);
+  display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--teal);
+}
+.info-row p{font-size:clamp(13px,2vw,15px);color:rgba(255,255,255,0.6);line-height:1.7}
+.info-row strong{display:block;color:#fff;font-size:clamp(13px,2vw,15px);margin-bottom:3px}
+.map-embed{margin-top:24px;border-radius:14px;overflow:hidden;border:1px solid var(--glass-border)}
+.map-embed iframe{width:100%;height:220px;border:none;filter:saturate(0.8) brightness(0.85)}
+/* Form */
+.contact-form{
+  background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius);padding:clamp(24px,5vw,36px);
+}
+.contact-form h3{font-family:var(--font-title);font-size:20px;letter-spacing:0.08em;margin-bottom:24px;color:var(--teal)}
+.form-group{margin-bottom:18px}
+.form-group label{display:block;font-size:11px;letter-spacing:0.12em;color:rgba(255,255,255,0.5);margin-bottom:8px;font-weight:500;text-transform:uppercase}
+.form-group input,
+.form-group textarea,
+.form-group select{
+  width:100%;padding:12px 14px;
+  background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);
+  border-radius:10px;color:#fff;font-size:clamp(14px,2vw,16px);font-family:inherit;
+  transition:border-color 0.3s,background 0.3s;
+  -webkit-appearance:none;appearance:none;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+  outline:none;border-color:var(--teal);background:rgba(25,184,197,0.07);
+}
+.form-group textarea{resize:vertical;min-height:100px}
+.form-group select option{background:#0a1628;color:#fff}
+.form-group input[type="date"]{color-scheme:dark}
+.form-group input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(0.7) sepia(1) saturate(2) hue-rotate(150deg);cursor:pointer}
+.btn-submit{
+  width:100%;padding:14px;border-radius:12px;font-size:clamp(14px,3vw,16px);font-weight:700;
+  background:linear-gradient(135deg,var(--accent),var(--orange));color:#fff;
+  box-shadow:0 8px 30px rgba(232,73,23,0.35);transition:all 0.3s ease;
+  letter-spacing:0.06em;
+}
+.btn-submit:hover{box-shadow:0 12px 40px rgba(232,73,23,0.55);transform:translateY(-2px)}
+.btn-submit:disabled{opacity:0.6;cursor:not-allowed;transform:none}
+.form-success{
+  display:none;text-align:center;padding:24px;
+}
+.form-success i{font-size:48px;color:var(--teal);margin-bottom:14px;display:block}
+.form-success h4{font-family:var(--font-title);font-size:20px;margin-bottom:8px}
+.form-success p{color:rgba(255,255,255,0.55);font-size:14px}
+
+/* ===== FOOTER ===== */
+footer{
+  background:#030b18;padding:clamp(40px,6vw,60px) 5% 28px;
+  border-top:1px solid rgba(255,255,255,0.06);
+}
+.footer-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr;gap:36px;margin-bottom:40px}
+.footer-logo{width:64px;margin-bottom:14px;filter:drop-shadow(0 0 12px rgba(25,184,197,0.4))}
+.footer-name{font-family:var(--font-title);font-size:19px;font-weight:700;margin-bottom:6px;letter-spacing:0.05em}
+.footer-tagline{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7;margin-bottom:20px;max-width:260px}
+.social-links{display:flex;gap:10px;flex-wrap:wrap}
+.social-link{
+  width:40px;height:40px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+  font-size:16px;transition:all 0.3s ease;color:rgba(255,255,255,0.65);
+  flex-shrink:0;
+}
+.social-link:hover{background:var(--teal);color:#fff;border-color:var(--teal);transform:translateY(-3px);box-shadow:0 6px 20px rgba(25,184,197,0.4)}
+.footer-col h4{font-family:var(--font-title);font-size:14px;letter-spacing:0.15em;color:var(--teal);margin-bottom:18px;font-weight:600;text-transform:uppercase}
+.footer-links{list-style:none}
+.footer-links li{margin-bottom:10px}
+.footer-links a{font-size:13px;color:rgba(255,255,255,0.5);transition:color 0.3s;display:flex;align-items:center;gap:8px}
+.footer-links a:hover{color:var(--teal)}
+.footer-links a i{font-size:11px;color:var(--teal);flex-shrink:0}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.06);padding-top:20px;text-align:center;font-size:12px;color:rgba(255,255,255,0.3);line-height:1.6}
+.footer-bottom span{color:var(--accent)}
+
+/* ===== SCROLL REVEAL ===== */
+.reveal{opacity:0;transition:opacity 0.9s cubic-bezier(0.22,1,0.36,1),transform 0.9s cubic-bezier(0.22,1,0.36,1)}
+.reveal.from-left{transform:translateX(-60px)}
+.reveal.from-right{transform:translateX(60px)}
+.reveal.from-bottom{transform:translateY(50px)}
+.reveal.visible{opacity:1;transform:none}
+
+/* ===== FLOATING CTA ===== */
+.float-wa{
+  position:fixed;bottom:88px;right:20px;z-index:800;
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,#25d366,#128c7e);
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;color:#fff;
+  box-shadow:0 8px 30px rgba(37,211,102,0.5);
+  transition:all 0.3s ease;
+  animation:floatBounce 2.5s ease-in-out infinite;
+}
+.float-wa:hover{transform:scale(1.12);box-shadow:0 12px 40px rgba(37,211,102,0.7);animation:none}
+
+/* Call button - bottom left */
+.float-call{
+  position:fixed;bottom:20px;left:20px;z-index:800;
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,#e84917,#f05a1a);
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;color:#fff;
+  box-shadow:0 8px 30px rgba(232,73,23,0.55);
+  transition:all 0.3s ease;
+  animation:floatBounce 2.8s ease-in-out infinite;
+  text-decoration:none;
+}
+.float-call:hover{transform:scale(1.12);box-shadow:0 12px 40px rgba(232,73,23,0.75);animation:none}
+.float-call-tooltip,.float-wa-tooltip{
+  position:absolute;bottom:58px;left:50%;transform:translateX(-50%);
+  background:rgba(10,22,40,0.92);color:#fff;
+  font-size:11px;font-weight:600;letter-spacing:0.05em;
+  padding:5px 10px;border-radius:16px;white-space:nowrap;
+  border:1px solid rgba(255,255,255,0.15);pointer-events:none;
+  opacity:0;transition:opacity 0.3s;
+}
+.float-call:hover .float-call-tooltip,
+.float-wa:hover .float-wa-tooltip{opacity:1}
+
+@keyframes floatBounce{
+  0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}
+}
+
+/* ===== RIPPLE ===== */
+.ripple-effect{
+  position:absolute;border-radius:50%;background:rgba(255,255,255,0.25);
+  transform:scale(0);animation:ripple 0.6s linear;pointer-events:none;
+}
+@keyframes ripple{to{transform:scale(4);opacity:0}}
+
+/* ===== AI CHATBOT ===== */
+.chat-fab{
+  position:fixed;bottom:20px;right:20px;z-index:800;
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,var(--teal),#0e9aa7);
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;color:#fff;
+  box-shadow:0 8px 30px rgba(25,184,197,0.5);
+  transition:all 0.3s ease;cursor:pointer;border:none;
+  animation:floatBounce 3s ease-in-out infinite;
+}
+.chat-fab:hover{transform:scale(1.1);box-shadow:0 12px 40px rgba(25,184,197,0.7);animation:none}
+.chat-fab-label{
+  position:absolute;right:60px;top:50%;transform:translateY(-50%);
+  background:rgba(10,22,40,0.92);color:#fff;
+  font-size:12px;font-weight:600;letter-spacing:0.05em;
+  padding:5px 12px;border-radius:20px;white-space:nowrap;
+  border:1px solid rgba(25,184,197,0.3);pointer-events:none;
+  opacity:0;transition:opacity 0.3s;
+}
+.chat-fab:hover .chat-fab-label{opacity:1}
+
+#chat-window{
+  position:fixed;bottom:82px;right:20px;z-index:801;
+  width:min(370px,calc(100vw - 32px));
+  height:min(540px,72vh);
+  background:#0b1a2e;border:1px solid rgba(25,184,197,0.25);
+  border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.55);
+  display:flex;flex-direction:column;overflow:hidden;
+  transform:scale(0.85) translateY(20px);transform-origin:bottom right;
+  opacity:0;visibility:hidden;
+  transition:all 0.3s cubic-bezier(0.22,1,0.36,1);
+}
+#chat-window.open{transform:scale(1) translateY(0);opacity:1;visibility:visible}
+.chat-header{
+  padding:12px 16px;
+  background:linear-gradient(135deg,#0d2440,#0a1e36);
+  border-bottom:1px solid rgba(25,184,197,0.2);
+  display:flex;align-items:center;gap:10px;flex-shrink:0;
+}
+.chat-header-logo{
+  width:42px;height:42px;border-radius:50%;
+  object-fit:cover;flex-shrink:0;
+  border:2px solid var(--teal);
+  box-shadow:0 0 12px rgba(25,184,197,0.4);
+  background:linear-gradient(135deg,var(--teal),#0e9aa7);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;color:#fff;overflow:hidden;
+}
+.chat-header-logo img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.chat-header-info{flex:1;min-width:0}
+.chat-header-name{font-family:var(--font-title);font-size:15px;font-weight:700;letter-spacing:0.04em}
+.chat-header-status{font-size:11px;color:#8dc63f;display:flex;align-items:center;gap:5px;margin-top:1px}
+.chat-header-status::before{content:'';width:7px;height:7px;border-radius:50%;background:#8dc63f;flex-shrink:0;box-shadow:0 0 6px rgba(141,198,63,0.6)}
+.chat-close{margin-left:auto;background:rgba(255,255,255,0.08);border:none;color:rgba(255,255,255,0.7);font-size:16px;cursor:pointer;padding:0;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;transition:all 0.3s;flex-shrink:0}
+.chat-close:hover{color:#fff;background:rgba(255,255,255,0.18);transform:rotate(90deg)}
+.chat-messages{
+  flex:1;overflow-y:auto;padding:14px 12px;
+  display:flex;flex-direction:column;gap:8px;
+  scroll-behavior:smooth;
+  background:linear-gradient(180deg,#0a1628 0%,#081422 100%);
+}
+.chat-messages::-webkit-scrollbar{width:3px}
+.chat-messages::-webkit-scrollbar-thumb{background:rgba(25,184,197,0.3);border-radius:99px}
+.chat-msg{max-width:85%;display:flex;flex-direction:column;gap:3px;animation:msgIn 0.28s ease}
+@keyframes msgIn{from{opacity:0;transform:translateY(10px) scale(0.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.chat-msg.bot{align-self:flex-start}
+.chat-msg.user{align-self:flex-end}
+.chat-bubble{
+  padding:9px 13px;font-size:13px;line-height:1.55;
+  word-wrap:break-word;overflow-wrap:break-word;
+}
+.chat-msg.bot .chat-bubble{
+  background:#1a2e48;border:1px solid rgba(25,184,197,0.15);
+  border-radius:18px 18px 18px 4px;
+  color:rgba(255,255,255,0.92);
+}
+.chat-msg.user .chat-bubble{
+  background:linear-gradient(135deg,#19b8c5,#0e9aa7);
+  border-radius:18px 18px 4px 18px;color:#fff;
+  box-shadow:0 4px 14px rgba(25,184,197,0.3);
+}
+.chat-meta{font-size:10px;color:rgba(255,255,255,0.28);padding:0 4px}
+.chat-msg.user .chat-meta{text-align:right}
+.chat-msg.bot .chat-meta{display:flex;align-items:center;gap:4px}
+.typing-indicator-wrap{align-self:flex-start}
+.typing-dots{display:flex;gap:4px;align-items:center;padding:11px 14px;background:#1a2e48;border:1px solid rgba(25,184,197,0.15);border-radius:18px 18px 18px 4px;width:fit-content}
+.typing-dots span{width:7px;height:7px;border-radius:50%;background:var(--teal);animation:typingBounce 1.2s ease-in-out infinite}
+.typing-dots span:nth-child(2){animation-delay:0.2s}
+.typing-dots span:nth-child(3){animation-delay:0.4s}
+@keyframes typingBounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-7px)}}
+.chat-quick{
+  padding:10px 12px;border-top:1px solid rgba(255,255,255,0.06);
+  background:#081422;
+  display:flex;gap:7px;flex-wrap:wrap;flex-shrink:0;
+}
+.quick-btn{
+  padding:5px 12px;border-radius:16px;font-size:11px;font-weight:600;
+  background:rgba(25,184,197,0.1);border:1px solid rgba(25,184,197,0.28);
+  color:var(--teal);cursor:pointer;transition:all 0.22s ease;white-space:nowrap;
+  font-family:var(--font-body);
+}
+.quick-btn:hover,
+.quick-btn:active{background:var(--teal);color:#fff;border-color:var(--teal)}
+.chat-input-row{
+  padding:10px 12px;border-top:1px solid rgba(255,255,255,0.08);
+  background:#081422;
+  display:flex;gap:9px;align-items:center;flex-shrink:0;
+}
+.chat-input{
+  flex:1;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.14);
+  border-radius:22px;padding:9px 16px;color:#fff;font-size:13px;font-family:inherit;
+  outline:none;transition:border-color 0.3s,background 0.3s;
+}
+.chat-input:focus{border-color:var(--teal);background:rgba(25,184,197,0.06)}
+.chat-input::placeholder{color:rgba(255,255,255,0.3)}
+.chat-send{
+  width:38px;height:38px;border-radius:50%;
+  background:linear-gradient(135deg,var(--teal),#0e9aa7);
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;color:#fff;cursor:pointer;border:none;
+  transition:all 0.3s ease;flex-shrink:0;
+  box-shadow:0 4px 14px rgba(25,184,197,0.35);
+}
+.chat-send:hover{transform:scale(1.1);box-shadow:0 6px 20px rgba(25,184,197,0.55)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1024px){
+  nav ul li:not(:last-child):nth-child(n+4){display:none}
+}
+
+@media(max-width:768px){
+  :root{--navbar-h:64px}
+  
+  nav{display:none!important}
+  .hamburger{display:flex!important}
+
+  .about-grid{grid-template-columns:1fr;gap:24px}
+  .about-img-wrap{padding-bottom:28px;padding-right:0}
+  .about-badge{right:0;bottom:0;max-width:100px}
+  .about-text{padding:0 4px;word-wrap:break-word;overflow-wrap:break-word}
+  
+  .gallery-grid{grid-template-columns:1fr 1fr}
+  
+  .contact-grid{grid-template-columns:1fr;gap:36px}
+  
+  .footer-grid{grid-template-columns:1fr;gap:28px}
+  .footer-tagline{max-width:100%}
+  
+  .hero-stats{flex-direction:row;flex-wrap:wrap}
+  .stat-card{flex:1;min-width:calc(33% - 10px)}
+  
+  .float-wa{width:46px;height:46px;font-size:20px;bottom:80px;right:16px}
+  .float-call{width:46px;height:46px;font-size:19px;bottom:16px;left:16px}
+  .chat-fab{width:46px;height:46px;font-size:19px;bottom:16px;right:16px}
+  #chat-window{right:12px;bottom:74px;width:calc(100vw - 24px)}
+}
+
+@media(max-width:480px){
+  .gallery-grid{grid-template-columns:1fr}
+  .hero-btns{flex-direction:column}
+  .btn{justify-content:center}
+  .stat-card{min-width:calc(50% - 8px)}
+  
+  .float-wa{width:44px;height:44px;font-size:19px;bottom:76px;right:14px}
+  .float-call{width:44px;height:44px;font-size:18px;bottom:14px;left:14px}
+  .chat-fab{width:44px;height:44px;font-size:18px;bottom:14px;right:14px}
+  #chat-window{right:8px;bottom:70px;width:calc(100vw - 16px)}
+  
+  .about-grid{margin-top:20px}
+  .contact-grid{margin-top:28px}
+}
+
+@media(max-width:360px){
+  .hero-title{font-size:28px}
+  .section-title{font-size:24px}
+  .hero-badge{font-size:10px;padding:5px 12px}
+  .float-call,.float-wa,.chat-fab{width:42px;height:42px}
+}
+</style>
 </head>
-
 <body>
 
-<header>
-    <h1>Sushant Shree Harivanshi</h1>
-    <p>Professional Website Development</p>
+<!-- LOADER -->
+<div id="loader" role="status" aria-label="Loading">
+  <img src="logo/WhatsApp Image 2026-04-05 at 12.07.31.jpeg" class="loader-logo" alt="Hanu Dental Logo" width="160" height="160" />
+  <div class="loader-brand">HANU <span>DENTAL</span> AND HEALTHCARE</div>
+  <div class="loader-tagline">SHAHABAD · UTTAR PRADESH</div>
+  <div class="loader-bar" aria-hidden="true"><div class="loader-bar-fill"></div></div>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox">
+  <span id="lightbox-close" role="button" tabindex="0" aria-label="Close lightbox"><i class="fa fa-times" aria-hidden="true"></i></span>
+  <img id="lightbox-img" src="" alt="Gallery image" />
+</div>
+
+<!-- MOBILE MENU -->
+<div id="mobile-menu" role="navigation" aria-label="Mobile navigation">
+  <span class="close-menu" id="close-mobile" role="button" aria-label="Close menu"><i class="fa fa-times" aria-hidden="true"></i></span>
+  <a href="#hero" onclick="closeMobile()">Home</a>
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#services" onclick="closeMobile()">Services</a>
+  <a href="#gallery" onclick="closeMobile()">Gallery</a>
+  <a href="#trust" onclick="closeMobile()">Reviews</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+  <a href="tel:09369101525" class="mobile-menu-call" onclick="closeMobile()"><i class="fa fa-phone" aria-hidden="true"></i> &nbsp;Call Now: 093691 01525</a>
+</div>
+
+<!-- NAVBAR -->
+<header id="navbar" role="banner">
+  <div class="nav-brand">
+    <img src="logo/WhatsApp Image 2026-04-05 at 12.07.31.jpeg" class="nav-logo" alt="Hanu Dental Logo" width="44" height="44" loading="eager" />
+    <div class="nav-name">Hanu Dental<span>& Healthcare</span></div>
+  </div>
+  <nav aria-label="Main navigation">
+    <ul>
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="tel:09369101525" class="btn btn-primary nav-cta"><i class="fa fa-phone" aria-hidden="true"></i> Call Now</a></li>
+    </ul>
+  </nav>
+  <button class="hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+    <span></span><span></span><span></span>
+  </button>
 </header>
 
-<nav>
-    <a href="#">Home</a>
-    <a href="#">Services</a>
-    <a href="#">Contact</a>
-</nav>
+<!-- HERO -->
+<section id="hero" aria-label="Hero">
+  <div class="hero-bg" role="img" aria-label="Dental clinic background"></div>
+  <div class="hero-overlay" aria-hidden="true"></div>
+  <img src="logo/WhatsApp Image 2026-04-05 at 12.07.31.jpeg" class="hero-watermark" alt="" aria-hidden="true" />
+  <div class="hero-content">
+    <div class="hero-badge"><i class="fa fa-star" aria-hidden="true"></i> Rated 4.9 on Google &nbsp;·&nbsp; Shahabad's Finest Dental Care</div>
+    <h1 class="hero-title">
+      Your Smile<br/>Deserves the<br/><span class="orange">Best</span> <span class="accent">Care</span>
+    </h1>
+    <div class="typewriter-wrap" aria-live="polite">
+      <span id="typewriter"></span><span style="color:var(--teal);animation:blink 1s step-end infinite" aria-hidden="true">|</span>
+    </div>
+    <p class="hero-desc">
+      Dr. Subrat Agnihotri & team provide world-class dental and general healthcare with the latest technology in a warm, comfortable environment. Pain-free. Affordable. Expert.
+    </p>
+    <div class="hero-btns">
+      <a href="tel:09369101525" class="btn btn-primary"><i class="fa fa-phone" aria-hidden="true"></i> Call Now</a>
+      <a href="https://wa.me/919369101525?text=Hello%2C%20I%20would%20like%20to%20book%20an%20appointment%20at%20Hanu%20Dental%20and%20Healthcare." target="_blank" rel="noopener" class="btn btn-whatsapp"><i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp</a>
+      <a href="https://maps.google.com/?q=209+Allapur+Shahabad+Uttar+Pradesh+241124" target="_blank" rel="noopener" class="btn btn-outline"><i class="fa fa-location-dot" aria-hidden="true"></i> Get Directions</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card"><div class="stat-num">4.9<i class="fa fa-star" style="font-size:16px;color:var(--gold);margin-left:4px" aria-hidden="true"></i></div><div class="stat-lbl">Google Rating</div></div>
+      <div class="stat-card"><div class="stat-num">18+</div><div class="stat-lbl">Reviews</div></div>
+      <div class="stat-card"><div class="stat-num">10+</div><div class="stat-lbl">Yrs Exp</div></div>
+    </div>
+  </div>
+</section>
 
-<div class="hero">
-    <h1>Grow Your Business Online 🚀</h1>
-    <p>I create modern and high-converting websites</p>
-    <a href="#" class="btn">Get Started</a>
-</div>
+<!-- ABOUT -->
+<section id="about" aria-labelledby="about-title">
+  <div class="section-tag reveal from-left"><i class="fa fa-hospital" aria-hidden="true"></i>About Us</div>
+  <div class="about-grid">
+    <div class="about-img-wrap reveal from-left">
+      <img src="images/img1.jpeg" class="about-img" alt="Inside Hanu Dental Clinic" loading="lazy" width="600" height="440" />
+      <div class="about-badge">
+        <div class="big">4.9★</div>
+        <div class="sm">Google Rating</div>
+      </div>
+    </div>
+    <div class="about-text reveal from-right" style="padding:0 4px;min-width:0;word-wrap:break-word;overflow-wrap:break-word">
+      <div class="section-tag"><i class="fa fa-tooth" aria-hidden="true"></i>Who We Are</div>
+      <h2 id="about-title" class="section-title">Compassionate <span style="color:var(--teal)">Dental</span> & General Healthcare</h2>
+      <p>At <strong>Hanu Dental and Healthcare</strong>, Dr. Subrat Agnihotri leads a dedicated team committed to providing exceptional dental and general health services to the people of Shahabad and surrounding areas.</p>
+      <p>We combine modern technology with a gentle touch to deliver pain-free, effective treatments for patients of all ages. From routine check-ups to complex dental restorations, we've got you covered.</p>
+      <ul class="about-checks">
+        <li><i class="fa fa-circle-check" aria-hidden="true"></i> State-of-the-art digital X-ray & equipment</li>
+        <li><i class="fa fa-circle-check" aria-hidden="true"></i> Qualified & experienced medical team</li>
+        <li><i class="fa fa-circle-check" aria-hidden="true"></i> Hygienic, sterilized treatment environment</li>
+        <li><i class="fa fa-circle-check" aria-hidden="true"></i> Affordable pricing with EMI options</li>
+        <li><i class="fa fa-circle-check" aria-hidden="true"></i> Emergency dental care available</li>
+      </ul>
+      <a href="#contact" class="btn btn-primary" style="display:inline-flex;margin-top:8px"><i class="fa fa-calendar-check" aria-hidden="true"></i> Book Appointment</a>
+    </div>
+  </div>
+</section>
 
-<div class="section">
-    <h2>Our Services</h2>
-    <p>✔ Business Website</p>
-    <p>✔ E-commerce Website</p>
-    <p>✔ Landing Page</p>
-</div>
+<!-- SERVICES -->
+<section id="services" aria-labelledby="services-title">
+  <div style="text-align:center" class="reveal from-bottom">
+    <div class="section-tag" style="justify-content:center"><i class="fa fa-stethoscope" aria-hidden="true"></i>What We Offer</div>
+    <h2 id="services-title" class="section-title">Our <span style="color:var(--teal)">Premium</span> Services</h2>
+    <p class="section-sub" style="margin:0 auto">Comprehensive dental & healthcare solutions under one roof, using the latest clinical techniques.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal from-left">
+      <div class="service-icon"><i class="fa fa-tooth" aria-hidden="true"></i></div>
+      <h3>Root Canal Treatment</h3>
+      <p>Advanced, painless RCT using rotary instruments. Save your natural tooth and relieve severe toothache effectively.</p>
+      <div class="service-link">Learn More <i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+    </div>
+    <div class="service-card reveal from-bottom" style="transition-delay:0.1s">
+      <div class="service-icon"><i class="fa fa-screwdriver-wrench" aria-hidden="true"></i></div>
+      <h3>Dental Implants</h3>
+      <p>Permanent, natural-looking tooth replacement using titanium implants. Restore your smile with confidence.</p>
+      <div class="service-link">Learn More <i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+    </div>
+    <div class="service-card reveal from-right" style="transition-delay:0.15s">
+      <div class="service-icon"><i class="fa fa-align-center" aria-hidden="true"></i></div>
+      <h3>Braces & Aligners</h3>
+      <p>Traditional metal braces and modern clear aligners to straighten teeth and perfect your bite.</p>
+      <div class="service-link">Learn More <i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+    </div>
+    <div class="service-card reveal from-left" style="transition-delay:0.2s">
+      <div class="service-icon"><i class="fa fa-shield-halved" aria-hidden="true"></i></div>
+      <h3>Teeth Cleaning</h3>
+      <p>Professional scaling and polishing to remove plaque, tartar and stains. Keep your gums healthy.</p>
+      <div class="service-link">Learn More <i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+    </div>
+    <div class="service-card reveal from-left" style="transition-delay:0.25s">
+      <div class="service-icon"><i class="fa fa-wand-magic-sparkles" aria-hidden="true"></i></div>
+      <h3>Teeth Whitening</h3>
+      <p>Professional in-clinic whitening that delivers dramatically brighter results safely and quickly. Up to 8 shades lighter.</p>
+      <div class="service-link">Learn More <i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+    </div>
+    <div class="service-card reveal from-right" style="transition-delay:0.3s">
+      <div class="service-icon"><i class="fa fa-star" aria-hidden="true"></i></div>
+      <h3>Smile Design</h3>
+      <p>Complete smile makeover combining veneers, crowns and whitening for a picture-perfect Hollywood smile.</p>
+      <div class="service-link">Learn More <i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+    </div>
+  </div>
+</section>
 
-<div class="section">
-    <h2>Contact</h2>
-    <p>📞 7607425821</p>
-    <p>📍 Noida, India</p>
-</div>
+<!-- GALLERY -->
+<section id="gallery" aria-labelledby="gallery-title">
+  <div style="text-align:center" class="reveal from-bottom">
+    <div class="section-tag" style="justify-content:center"><i class="fa fa-images" aria-hidden="true"></i>Gallery</div>
+    <h2 id="gallery-title" class="section-title">Our <span style="color:var(--teal)">Clinic</span> & Results</h2>
+    <p class="section-sub" style="margin:0 auto">A glimpse into our world-class facility and the beautiful smiles we create every day.</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item reveal from-left" onclick="openLightbox('https://images.unsplash.com/photo-1588776814546-1ffedbe47d0a?w=1200&q=85')" role="button" tabindex="0" aria-label="View Clinic Interior">
+      <img src="images/img4.jpg" alt="Dental Clinic Interior" loading="lazy" width="400" height="300" />
+      <div class="gallery-overlay" aria-hidden="true"><span><i class="fa fa-expand"></i>Clinic Interior</span></div>
+    </div>
+    <div class="gallery-item reveal from-bottom" onclick="openLightbox('https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=1200&q=85')" role="button" tabindex="0" aria-label="View Treatment Room">
+      <img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=600&q=80" alt="Dental Treatment Room" loading="lazy" width="400" height="300" />
+      <div class="gallery-overlay" aria-hidden="true"><span><i class="fa fa-expand"></i>Treatment Room</span></div>
+    </div>
+    <div class="gallery-item reveal from-right" onclick="openLightbox('https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=1200&q=85')" role="button" tabindex="0" aria-label="View Happy Patients">
+      <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=600&q=80" alt="Happy Dental Patients" loading="lazy" width="400" height="300" />
+      <div class="gallery-overlay" aria-hidden="true"><span><i class="fa fa-expand"></i>Happy Patients</span></div>
+    </div>
+    <div class="gallery-item reveal from-left" onclick="openLightbox('https://images.unsplash.com/photo-1571772996211-2f02c9727629?w=1200&q=85')" role="button" tabindex="0" aria-label="View Modern Equipment">
+      <img src="https://images.unsplash.com/photo-1571772996211-2f02c9727629?w=600&q=80" alt="Modern Dental Equipment" loading="lazy" width="400" height="300" />
+      <div class="gallery-overlay" aria-hidden="true"><span><i class="fa fa-expand"></i>Modern Equipment</span></div>
+    </div>
+    <div class="gallery-item reveal from-bottom" onclick="openLightbox('https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=1200&q=85')" role="button" tabindex="0" aria-label="View Smile Makeover">
+      <img src="https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=600&q=80" alt="Smile Makeover Result" loading="lazy" width="400" height="300" />
+      <div class="gallery-overlay" aria-hidden="true"><span><i class="fa fa-expand"></i>Smile Makeover</span></div>
+    </div>
+    <div class="gallery-item reveal from-right" onclick="openLightbox('https://images.unsplash.com/photo-1598256989800-fe5f95da9787?w=1200&q=85')" role="button" tabindex="0" aria-label="View Dental Care">
+      <img src="https://images.unsplash.com/photo-1598256989800-fe5f95da9787?w=600&q=80" alt="Dental Care Procedure" loading="lazy" width="400" height="300" />
+      <div class="gallery-overlay" aria-hidden="true"><span><i class="fa fa-expand"></i>Dental Care</span></div>
+    </div>
+  </div>
+</section>
 
-<footer>
-    <p>© 2026 Sushant Web Services</p>
+<!-- TRUST -->
+<section id="trust" aria-labelledby="trust-title">
+  <div class="rating-hero reveal from-bottom">
+    <div class="section-tag" style="justify-content:center"><i class="fa fa-star" aria-hidden="true"></i>Patient Reviews</div>
+    <div class="rating-big" aria-label="4.9 star rating">4.9</div>
+    <div class="stars" aria-hidden="true">★★★★★</div>
+    <div class="reviews-count" id="trust-title">Based on 18+ Google Reviews · Shahabad's Highest Rated Dental Clinic</div>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testi-card reveal from-left">
+      <div class="testi-top">
+        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Priya&backgroundColor=b6e3f4" class="testi-avatar" alt="Priya Sharma" loading="lazy" width="48" height="48" />
+        <div>
+          <div class="testi-name">Priya Sharma</div>
+          <div class="testi-loc">Shahabad, UP</div>
+        </div>
+      </div>
+      <div class="testi-stars" aria-label="5 stars">★★★★★</div>
+      <p class="testi-text">"Bahut achha experience raha. Dr. Subrat ji ne bilkul dard ke bina root canal kiya. Clinic ekdum saaf suthra hai aur staff bahut cooperative hai. Best dental clinic in this area!"</p>
+    </div>
+    <div class="testi-card reveal from-bottom" style="transition-delay:0.1s">
+      <div class="testi-top">
+        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Rahul&backgroundColor=ffdfbf" class="testi-avatar" alt="Rahul Verma" loading="lazy" width="48" height="48" />
+        <div>
+          <div class="testi-name">Rahul Verma</div>
+          <div class="testi-loc">Hardoi Road, UP</div>
+        </div>
+      </div>
+      <div class="testi-stars" aria-label="5 stars">★★★★★</div>
+      <p class="testi-text">"I had my dental implants done here. The quality is outstanding and the price is very reasonable. Doctor explains everything clearly. My smile has completely transformed. Highly recommended!"</p>
+    </div>
+    <div class="testi-card reveal from-right" style="transition-delay:0.2s">
+      <div class="testi-top">
+        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Neha&backgroundColor=c0aede" class="testi-avatar" alt="Neha Gupta" loading="lazy" width="48" height="48" />
+        <div>
+          <div class="testi-name">Neha Gupta</div>
+          <div class="testi-loc">Allapur, UP</div>
+        </div>
+      </div>
+      <div class="testi-stars" aria-label="5 stars">★★★★★</div>
+      <p class="testi-text">"Got my braces fixed here and the results are amazing. Dr. Agnihotri is very knowledgeable and patient. The clinic uses the latest technology. Very professional and hygienic environment."</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" aria-labelledby="contact-title">
+  <div style="text-align:center" class="reveal from-bottom">
+    <div class="section-tag" style="justify-content:center"><i class="fa fa-envelope" aria-hidden="true"></i>Get In Touch</div>
+    <h2 id="contact-title" class="section-title">Book Your <span style="color:var(--teal)">Appointment</span></h2>
+    <p class="section-sub" style="margin:0 auto">Visit us or reach out online. We'll confirm your slot and welcome you to a healthier smile.</p>
+  </div>
+  <div class="contact-grid">
+    <div class="reveal from-left">
+      <div class="contact-info">
+        <h3><i class="fa fa-location-dot" aria-hidden="true"></i> Find Us</h3>
+        <div class="info-row">
+          <div class="info-icon"><i class="fa fa-hospital" aria-hidden="true"></i></div>
+          <div><strong>Hanu Dental & Healthcare</strong><p>209, Allapur, Lucknow - Hardoi - Shahjahanpur Rd,<br/>Shahabad, Uttar Pradesh 241124</p></div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon"><i class="fa fa-user-doctor" aria-hidden="true"></i></div>
+          <div><strong>Dr. Subrat Agnihotri</strong><p>Lead Dentist & Healthcare Specialist</p></div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon"><i class="fa fa-phone" aria-hidden="true"></i></div>
+          <div><strong>Phone / WhatsApp</strong><p><a href="tel:09369101525" style="color:var(--teal)">093691 01525</a></p></div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon"><i class="fa fa-clock" aria-hidden="true"></i></div>
+          <div><strong>Working Hours</strong><p>Mon – Sat: 9:00 AM – 8:00 PM<br/>Sunday: 10:00 AM – 2:00 PM</p></div>
+        </div>
+        <div class="map-embed">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3559.6120!2d79.9441!3d27.6510!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399e379c23e5d945%3A0xb28b58b2f43a2d2c!2sShahabad%2C%20Uttar%20Pradesh%20241124!5e0!3m2!1sen!2sin!4v1699887789!5m2!1sen!2sin"
+            title="Hanu Dental Location Map"
+            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+    </div>
+    <div class="reveal from-right">
+      <div class="contact-form">
+        <h3><i class="fa fa-calendar-check" aria-hidden="true"></i> Book Appointment</h3>
+        <div id="form-fields">
+          <div class="form-group">
+            <label for="f-name">Full Name</label>
+            <input type="text" id="f-name" placeholder="Your full name" required autocomplete="name" />
+          </div>
+          <div class="form-group">
+            <label for="f-phone">Phone Number</label>
+            <input type="tel" id="f-phone" placeholder="10-digit mobile number" required autocomplete="tel" />
+          </div>
+          <div class="form-group">
+            <label for="f-service">Service Required</label>
+            <select id="f-service">
+              <option value="">Select a service</option>
+              <option>Teeth Cleaning</option>
+              <option>Root Canal Treatment</option>
+              <option>Dental Implants</option>
+              <option>Braces / Aligners</option>
+              <option>Teeth Whitening</option>
+              <option>Smile Design</option>
+              <option>General Checkup</option>
+              <option>Emergency</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="f-date">Preferred Date</label>
+            <input type="date" id="f-date" min="" />
+          </div>
+          <div class="form-group">
+            <label for="f-message">Message</label>
+            <textarea id="f-message" placeholder="Describe your concern or preferred appointment time..."></textarea>
+          </div>
+          <button class="btn-submit" id="submitBtn" onclick="submitForm()">
+            <i class="fab fa-whatsapp" aria-hidden="true"></i> &nbsp;Send via WhatsApp
+          </button>
+        </div>
+        <div class="form-success" id="form-success" role="alert">
+          <i class="fab fa-whatsapp" aria-hidden="true" style="color:#25d366"></i>
+          <h4>Opening WhatsApp! 🎉</h4>
+          <p>Your appointment details are ready. WhatsApp should have opened — if not, tap the button below.</p>
+          <a id="wa-fallback-link" href="#" target="_blank" rel="noopener" class="btn btn-whatsapp" style="display:inline-flex;margin-top:18px"><i class="fab fa-whatsapp" aria-hidden="true"></i> Open WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-brand-col reveal from-left">
+      <img src="logo/WhatsApp Image 2026-04-05 at 12.07.31.jpeg" class="footer-logo" alt="Hanu Dental Logo" loading="lazy" width="64" height="64" />
+      <div class="footer-name">Hanu Dental & Healthcare</div>
+      <p class="footer-tagline">Delivering compassionate, world-class dental and general healthcare to the people of Shahabad and beyond.</p>
+      <div class="social-links">
+        <a href="https://wa.me/919369101525" target="_blank" rel="noopener" class="social-link" aria-label="WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+        <a href="https://g.co/kgs/example" target="_blank" rel="noopener" class="social-link" aria-label="Google"><i class="fab fa-google" aria-hidden="true"></i></a>
+        <a href="https://instagram.com" target="_blank" rel="noopener" class="social-link" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+        <a href="https://facebook.com" target="_blank" rel="noopener" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+      </div>
+    </div>
+    <div class="footer-col reveal from-bottom">
+      <h4>Quick Links</h4>
+      <ul class="footer-links">
+        <li><a href="#hero"><i class="fa fa-angle-right" aria-hidden="true"></i> Home</a></li>
+        <li><a href="#about"><i class="fa fa-angle-right" aria-hidden="true"></i> About Us</a></li>
+        <li><a href="#services"><i class="fa fa-angle-right" aria-hidden="true"></i> Services</a></li>
+        <li><a href="#gallery"><i class="fa fa-angle-right" aria-hidden="true"></i> Gallery</a></li>
+        <li><a href="#trust"><i class="fa fa-angle-right" aria-hidden="true"></i> Reviews</a></li>
+        <li><a href="#contact"><i class="fa fa-angle-right" aria-hidden="true"></i> Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col reveal from-right">
+      <h4>Contact</h4>
+      <ul class="footer-links">
+        <li><a href="tel:09369101525"><i class="fa fa-phone" aria-hidden="true"></i> 093691 01525</a></li>
+        <li><a href="https://wa.me/919369101525" target="_blank" rel="noopener"><i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp Us</a></li>
+        <li><a href="#"><i class="fa fa-location-dot" aria-hidden="true"></i> 209, Allapur, Shahabad, UP 241124</a></li>
+        <li><a href="#"><i class="fa fa-clock" aria-hidden="true"></i> Mon–Sat: 9AM – 8PM</a></li>
+        <li><a href="#"><i class="fa fa-clock" aria-hidden="true"></i> Sun: 10AM – 2PM</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 <span>Hanu Dental & Healthcare</span>. All Rights Reserved. | Dr. Subrat Agnihotri | Shahabad, UP</p>
+  </div>
 </footer>
 
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/919369101525?text=Hi%20Hanu%20Dental%2C%20I%27d%20like%20to%20book%20an%20appointment." target="_blank" rel="noopener" class="float-wa" title="Chat on WhatsApp" aria-label="Chat on WhatsApp">
+  <i class="fab fa-whatsapp" aria-hidden="true"></i>
+  <span class="float-wa-tooltip">WhatsApp Us</span>
+</a>
+
+<!-- FLOATING CALL BUTTON (BOTTOM LEFT) -->
+<a href="tel:+919369101525" class="float-call" title="Call Us Now" aria-label="Call us now">
+  <i class="fa fa-phone" aria-hidden="true"></i>
+  <span class="float-call-tooltip">Call Now</span>
+</a>
+
+<!-- AI CHATBOT FAB -->
+<button class="chat-fab" id="chatFab" aria-label="Open AI assistant" aria-expanded="false" aria-controls="chat-window">
+  <i class="fa fa-comment-medical" aria-hidden="true" id="chatFabIcon"></i>
+  <span class="chat-fab-label">Ask about our services</span>
+</button>
+
+<!-- CHAT WINDOW -->
+<div id="chat-window" role="dialog" aria-modal="true" aria-label="Hanu Dental AI Assistant">
+  <div class="chat-header">
+    <div class="chat-header-logo">
+      <img src="logo/WhatsApp Image 2026-04-05 at 12.07.31.jpeg" alt="Hanu Dental" onerror="this.parentElement.innerHTML='<i class=\'fa fa-tooth\'></i>'" />
+    </div>
+    <div class="chat-header-info">
+      <div class="chat-header-name">Hanu Dental Assistant</div>
+      <div class="chat-header-status">Online · Ready to help</div>
+    </div>
+    <button class="chat-close" id="chatClose" aria-label="Close chat"><i class="fa fa-times" aria-hidden="true"></i></button>
+  </div>
+  <div class="chat-messages" id="chatMessages" role="log" aria-live="polite" aria-relevant="additions"></div>
+  <div class="chat-quick" id="quickReplies" aria-label="Quick questions"></div>
+  <div class="chat-input-row">
+    <input type="text" class="chat-input" id="chatInput" placeholder="Type your question..." autocomplete="off" aria-label="Chat message input" />
+    <button class="chat-send" id="chatSend" aria-label="Send message"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+  </div>
+</div>
+
+<script>
+/* ===== LOADER ===== */
+(function(){
+  var loaderHidden = false;
+  function hideLoader(){
+    if(loaderHidden) return;
+    loaderHidden = true;
+    setTimeout(function(){
+      var l = document.getElementById('loader');
+      if(l) l.classList.add('hide');
+    }, 3600);
+  }
+  window.addEventListener('load', hideLoader);
+  // Fallback: hide after 5s regardless
+  setTimeout(hideLoader, 5000);
+})();
+
+/* ===== NAVBAR SCROLL ===== */
+var navbar = document.getElementById('navbar');
+var lastScroll = 0;
+window.addEventListener('scroll', function(){
+  var s = window.scrollY;
+  navbar.classList.toggle('scrolled', s > 50);
+  lastScroll = s;
+}, {passive:true});
+
+/* ===== HAMBURGER ===== */
+var hamburger = document.getElementById('hamburger');
+var mobileMenu = document.getElementById('mobile-menu');
+
+hamburger.addEventListener('click', function(){
+  var isOpen = mobileMenu.classList.contains('open');
+  if(!isOpen){
+    mobileMenu.classList.add('open');
+    hamburger.classList.add('active');
+    hamburger.setAttribute('aria-expanded','true');
+    document.body.classList.add('mobile-menu-open');
+  } else {
+    closeMobile();
+  }
+});
+
+document.getElementById('close-mobile').addEventListener('click', closeMobile);
+
+function closeMobile(){
+  mobileMenu.classList.remove('open');
+  hamburger.classList.remove('active');
+  hamburger.setAttribute('aria-expanded','false');
+  document.body.classList.remove('mobile-menu-open');
+}
+
+// Close on outside click
+document.addEventListener('click', function(e){
+  if(mobileMenu.classList.contains('open') && !mobileMenu.contains(e.target) && !hamburger.contains(e.target)){
+    closeMobile();
+  }
+});
+
+// Close on ESC
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape'){
+    closeMobile();
+    closeChatWindow();
+  }
+});
+
+/* ===== TYPEWRITER ===== */
+var phrases = [
+  'Advanced Dental Care',
+  'Pain-Free Treatment',
+  'Healthy Smiles Forever',
+  'Modern Dental Technology',
+  'Expert Root Canal Therapy',
+  'Beautiful Smile Designs'
+];
+var pi=0, ci=0, del=false;
+var tw = document.getElementById('typewriter');
+function type(){
+  var cur = phrases[pi];
+  if(!del){
+    tw.textContent = cur.slice(0, ci++);
+    if(ci > cur.length){ del=true; setTimeout(type, 1800); return; }
+  } else {
+    tw.textContent = cur.slice(0, ci--);
+    if(ci < 0){ del=false; pi=(pi+1)%phrases.length; ci=0; setTimeout(type,400); return; }
+  }
+  setTimeout(type, del ? 55 : 90);
+}
+setTimeout(type, 4000);
+
+/* ===== SCROLL REVEAL ===== */
+var reveals = document.querySelectorAll('.reveal');
+if('IntersectionObserver' in window){
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+  reveals.forEach(function(el){ io.observe(el); });
+} else {
+  reveals.forEach(function(el){ el.classList.add('visible'); });
+}
+
+/* ===== LIGHTBOX ===== */
+function openLightbox(src){
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+document.getElementById('lightbox').addEventListener('click', function(e){
+  if(e.target === this || e.target.id==='lightbox-close' || e.target.closest('#lightbox-close')){
+    this.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+});
+document.querySelectorAll('.gallery-item').forEach(function(item){
+  item.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' || e.key === ' ') this.click();
+  });
+});
+
+/* ===== RIPPLE ===== */
+document.querySelectorAll('.btn,.btn-submit').forEach(function(btn){
+  btn.addEventListener('click', function(e){
+    var r = document.createElement('span');
+    r.className='ripple-effect';
+    var rect=this.getBoundingClientRect();
+    var size=Math.max(rect.width,rect.height);
+    r.style.cssText='width:'+size+'px;height:'+size+'px;left:'+(e.clientX-rect.left-size/2)+'px;top:'+(e.clientY-rect.top-size/2)+'px;position:absolute;';
+    this.style.position='relative';
+    this.appendChild(r);
+    setTimeout(function(){r.remove()},700);
+  });
+});
+
+/* ===== FORM SUBMIT → WHATSAPP ===== */
+// Set min date on date input to today
+(function(){
+  var d = document.getElementById('f-date');
+  if(d){
+    var today = new Date().toISOString().split('T')[0];
+    d.setAttribute('min', today);
+  }
+})();
+
+function submitForm(){
+  var name    = document.getElementById('f-name').value.trim();
+  var phone   = document.getElementById('f-phone').value.trim();
+  var service = document.getElementById('f-service').value;
+  var date    = document.getElementById('f-date').value;
+  var message = document.getElementById('f-message').value.trim();
+
+  if(!name){
+    alert('Please enter your full name.');
+    document.getElementById('f-name').focus();
+    return;
+  }
+  if(!phone || phone.replace(/\D/g,'').length < 10){
+    alert('Please enter a valid 10-digit phone number.');
+    document.getElementById('f-phone').focus();
+    return;
+  }
+
+  // Format date nicely
+  var dateStr = 'Not specified';
+  if(date){
+    var parts = date.split('-');
+    dateStr = parts[2] + '/' + parts[1] + '/' + parts[0];
+  }
+
+  var wa_msg =
+    '🦷 *New Appointment Request*\n' +
+    '━━━━━━━━━━━━━━━━━━\n' +
+    '👤 *Name:* ' + name + '\n' +
+    '📞 *Phone:* ' + phone + '\n' +
+    '🩺 *Service:* ' + (service || 'Not specified') + '\n' +
+    '📅 *Date:* ' + dateStr + '\n' +
+    '💬 *Message:* ' + (message || 'No message') + '\n' +
+    '━━━━━━━━━━━━━━━━━━\n' +
+    '_Sent from Hanu Dental Website_';
+
+  var wa_url = 'https://wa.me/919369101525?text=' + encodeURIComponent(wa_msg);
+
+  // Show success message
+  document.getElementById('form-fields').style.display = 'none';
+  document.getElementById('form-success').style.display = 'block';
+
+  // Set fallback link
+  var fallback = document.getElementById('wa-fallback-link');
+  if(fallback) fallback.href = wa_url;
+
+  // Open WhatsApp in new tab
+  setTimeout(function(){
+    window.open(wa_url, '_blank');
+  }, 400);
+}
+
+/* ===== AI CHATBOT ===== */
+var chatFab = document.getElementById('chatFab');
+var chatWindow = document.getElementById('chat-window');
+var chatMessages = document.getElementById('chatMessages');
+var chatInput = document.getElementById('chatInput');
+var chatSend = document.getElementById('chatSend');
+var quickReplies = document.getElementById('quickReplies');
+var chatOpen = false;
+
+var botQA = [
+  {
+    triggers: ['timing','hours','open','time','close','schedule','when'],
+    answer: '⏰ We are open <strong>Monday to Saturday: 9:00 AM – 8:00 PM</strong> and <strong>Sunday: 10:00 AM – 2:00 PM</strong>. Walk-ins welcome or book in advance!'
+  },
+  {
+    triggers: ['location','address','where','find','directions','map','reach'],
+    answer: '📍 We are located at <strong>209, Allapur, Lucknow-Hardoi-Shahjahanpur Rd, Shahabad, UP 241124</strong>. Easy to find near the main road!'
+  },
+  {
+    triggers: ['cost','price','charge','fees','fee','expensive','affordable','cheap','rate'],
+    answer: '💰 We offer very <strong>affordable pricing</strong> with <strong>EMI options</strong> available. Costs vary by treatment. Call us at <a href="tel:09369101525" style="color:var(--teal)">093691 01525</a> for a free quote!'
+  },
+  {
+    triggers: ['root canal','rct','rct treatment','pain','toothache'],
+    answer: '🦷 Our <strong>Root Canal Treatment (RCT)</strong> is completely <strong>pain-free</strong> using modern rotary instruments. Dr. Agnihotri has 10+ years experience. Most cases done in a single visit!'
+  },
+  {
+    triggers: ['implant','implants','missing tooth','tooth replacement'],
+    answer: '✨ <strong>Dental Implants</strong> at Hanu Dental are permanent, look natural, and feel just like real teeth. We use high-quality titanium implants with a high success rate.'
+  },
+  {
+    triggers: ['braces','aligners','crooked','teeth straighten','orthodontic'],
+    answer: '😁 We offer both <strong>metal braces</strong> and <strong>clear aligners</strong> to straighten your teeth. Treatment plans are customized. Book a consultation to know which suits you best!'
+  },
+  {
+    triggers: ['whitening','white','bright','stain','yellow'],
+    answer: '⭐ Our <strong>professional teeth whitening</strong> can make your teeth up to <strong>8 shades brighter</strong> in a single session. Safe, fast, and effective!'
+  },
+  {
+    triggers: ['emergency','urgent','broken','accident','bleeding','severe'],
+    answer: '🚨 We offer <strong>emergency dental care</strong>! Call us immediately at <a href="tel:09369101525" style="color:var(--teal)"><strong>093691 01525</strong></a> or <a href="https://wa.me/919369101525" target="_blank" style="color:#25d366">WhatsApp us</a> for urgent cases.'
+  },
+  {
+    triggers: ['doctor','dr','dentist','agnihotri','subrat','qualification','experience'],
+    answer: '👨‍⚕️ <strong>Dr. Subrat Agnihotri</strong> is our Lead Dentist & Healthcare Specialist with <strong>10+ years of experience</strong>. He is known for his gentle, pain-free approach and has served thousands of happy patients in Shahabad.'
+  },
+  {
+    triggers: ['appointment','book','schedule','visit','slot'],
+    answer: '📅 To book an appointment: <br>📞 Call: <a href="tel:09369101525" style="color:var(--teal)">093691 01525</a><br>💬 WhatsApp: <a href="https://wa.me/919369101525" target="_blank" style="color:#25d366">Click here</a><br>Or fill the <a href="#contact" style="color:var(--teal)" onclick="closeChatWindow()">contact form</a> on this page!'
+  }
+];
+
+var quickQuestions = [
+  'Timings?',
+  'Location?',
+  'Cost?',
+  'Book Appointment'
+];
+
+function getTime(){
+  return new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+}
+
+function addMsg(text, sender){
+  var msg = document.createElement('div');
+  msg.className = 'chat-msg ' + sender;
+  msg.innerHTML = '<div class="chat-bubble">' + text + '</div><div class="chat-meta">' + getTime() + '</div>';
+  chatMessages.appendChild(msg);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+  return msg;
+}
+
+function showTyping(){
+  var t = document.createElement('div');
+  t.className = 'typing-indicator-wrap';
+  t.id = 'typing-indicator';
+  t.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+  chatMessages.appendChild(t);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function removeTyping(){
+  var t = document.getElementById('typing-indicator');
+  if(t) t.remove();
+}
+
+function getBotReply(input){
+  var q = input.toLowerCase();
+  for(var i=0; i<botQA.length; i++){
+    for(var j=0; j<botQA[i].triggers.length; j++){
+      if(q.indexOf(botQA[i].triggers[j]) !== -1){
+        return botQA[i].answer;
+      }
+    }
+  }
+  return "I'm not sure about that. For the best answer, please 📞 <a href='tel:09369101525' style='color:var(--teal)'>call us</a> or <a href='https://wa.me/919369101525' target='_blank' style='color:#25d366'>WhatsApp us</a>. Our team is happy to help! 😊";
+}
+
+function sendMessage(text){
+  var q = text || chatInput.value.trim();
+  if(!q) return;
+  chatInput.value = '';
+  quickReplies.style.display = 'none';
+  addMsg(q, 'user');
+  showTyping();
+  var delay = 900 + Math.random() * 500;
+  setTimeout(function(){
+    removeTyping();
+    addMsg(getBotReply(q), 'bot');
+  }, delay);
+}
+
+function buildQuickReplies(){
+  quickReplies.innerHTML = '';
+  quickQuestions.forEach(function(q){
+    var btn = document.createElement('button');
+    btn.className = 'quick-btn';
+    btn.textContent = q;
+    btn.addEventListener('click', function(){ sendMessage(q); });
+    quickReplies.appendChild(btn);
+  });
+}
+
+function openChatWindow(){
+  chatOpen = true;
+  chatWindow.classList.add('open');
+  chatFab.setAttribute('aria-expanded','true');
+  document.getElementById('chatFabIcon').className = 'fa fa-times';
+  chatFab.style.animation = 'none';
+  if(chatMessages.children.length === 0){
+    setTimeout(function(){
+      addMsg('👋 Namaste! I\'m the <strong>Hanu Dental Assistant</strong>. How can I help you today? Ask me anything about our services, timings, or appointments!', 'bot');
+      buildQuickReplies();
+    }, 300);
+  }
+  setTimeout(function(){ chatInput.focus(); }, 400);
+}
+
+function closeChatWindow(){
+  chatOpen = false;
+  chatWindow.classList.remove('open');
+  chatFab.setAttribute('aria-expanded','false');
+  document.getElementById('chatFabIcon').className = 'fa fa-comment-medical';
+  chatFab.style.animation = '';
+}
+
+chatFab.addEventListener('click', function(){
+  chatOpen ? closeChatWindow() : openChatWindow();
+});
+
+document.getElementById('chatClose').addEventListener('click', closeChatWindow);
+
+chatSend.addEventListener('click', function(){ sendMessage(); });
+
+chatInput.addEventListener('keydown', function(e){
+  if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); sendMessage(); }
+});
+</script>
 </body>
 </html>
